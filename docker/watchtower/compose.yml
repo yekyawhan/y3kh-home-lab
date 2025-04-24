@@ -1,7 +1,0 @@
-### for one time use them stop it
-docker run -d --name watchtower \
-    -e WATCHTOWER_SCHEDULE="0 3 * * *" \
-    --restart unless-stopped \
-    -e WATCHTOWER_CLEANUP=true \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    containrrr/watchtower:latest --run-once
