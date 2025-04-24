@@ -13,7 +13,7 @@ services:
       - /app/qbittorrent/appdata/config:/config
       - /mnt/sharedata/torrent:/downloads
     ports:
-      - 6880:8080
+      - 8080:8080
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
