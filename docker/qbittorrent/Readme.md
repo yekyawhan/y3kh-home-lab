@@ -7,11 +7,18 @@ docker exec -it qbittorrent /bin/bash
 ```
 To monitor the logs of the container in realtime:
 
-```docker logs -f qbittorrent```
+```
+docker logs -f qbittorrent
+```
 Container version number:
 
-```docker inspect -f '{{ index .Config.Labels "build_version" }}' qbittorrent```
+```
+docker inspect -f '{{ index .Config.Labels "build_version" }}' qbittorrent
+```
+
 Image version number:
 
-```docker inspect -f '{{ index .Config.Labels "build_version" }}' lscr.io/linuxserver/qbittorrent:latest```
+```
+docker inspect -f '{{ index .Config.Labels "build_version" }}' lscr.io/linuxserver/qbittorrent:latest
+```
 
