@@ -1,0 +1,15 @@
+#mkdir ./portainer_data
+version: '3.9' # You can use '3.9' for modern Docker features
+services:
+  portainer:
+    image: portainer/portainer-ee:lts
+    container_name: portainer
+    restart: always
+    ports:
+      - "8000:8000"
+      - "9443:9443"
+    volumes:
+      # Connects the Docker daemon socket from the host to the container
+      - /var/run/docker.sock:/var/run/docker.sock 
+      # Mounts the named volume 'portainer_data' for persistent data
+      - ./portainer_data:/data 
