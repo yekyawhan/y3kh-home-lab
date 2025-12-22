@@ -1,0 +1,57 @@
+#     Username: guacadmin
+#     Password: guacadmin
+services:
+  guacd:
+    container_name: guacd
+    image: guacamole/guacd:latest
+    networks:
+      - guac-net
+    restart: always
+    volumes:
+    - ./drive:/drive:rw
+    - ./record:/record:rw
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+  mysql:
+    image: mysql:latest
+    container_name: guac-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: guacamole_db
+      MYSQL_USER: guac_user
+      MYSQL_PASSWORD: guac_pass
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d:z
+      - ./data:/var/lib/mysql
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    networks:
+      - guac-net
+  guacamole:
+    container_name: guacamole
+    image: guacamole/guacamole:latest
+    env_file:
+      - .env
+    group_add:
+      - "1000"
+    depends_on:
+      - guacd
+      - mysql
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - proxy
+      - guac-net
+    volumes:
+      - ./record:/record:rw
+    ports:
+      - 6443:8080/tcp
+    # - 8080/tcp
+    restart: always
+networks:
+  guac-net:
+    driver: bridge
+    name: guac-net
+  proxy:
+    external: true
