@@ -1,0 +1,21 @@
+services:
+  homarr:
+    container_name: homarr
+    image: ghcr.io/homarr-labs/homarr:latest  # ⚠️ Fixed indentation (no tabs!)
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
+      - /app/homarr/appdata:/appdata
+    ports:
+      - '7575:7575'
+    environment:
+      - UID=1000 # Optional, set to your user ID
+      - GID=1000 # Optional, set to your group ID
+      - TZ=Asia/Yangon # Optional, set to your timezone
+      - SECRET_ENCRYPTION_KEY=5e5dc61d79c12184d97062c03bd5dee699ddeefaa4becdb4de8bbab70419327e
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true" # enable watchtower updates  
+networks:
+  default:
+    external: true
+    name: ykh
